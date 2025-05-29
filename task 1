@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Car {
+private:
+    string brand;
+    int cylinder;
+    double power;
+
+public:
+    Car(const string& brand, int cylinder, double power) : brand(brand), cylinder(cylinder), power(power) {}
+    
+    void ChangePower(double newPower) {
+        power = newPower;
+    }
+
+    void ChangeBrand(const string& newBrand) {
+        brand = newBrand;
+    }
+
+    virtual void display() {
+        cout << "Brand: " << brand << endl;
+        cout << "Cylinder: " << cylinder << endl;
+        cout << "Power: " << power << endl;
+    }
+};
+
+class Lorry : public Car {
+private:
+    double loadCapacity;
+
+public:
+    Lorry(const string& brand, int cylinder, double power, double loadCapacity) : Car(brand, cylinder, power), loadCapacity(loadCapacity) {}
+
+    void ChangeBrand(const string& newBrand) {
+        Car::ChangeBrand(newBrand);
+    }
+
+    void ChangeLoadCapacity(double newLoadCapacity) {
+        loadCapacity = newLoadCapacity;
+    }
+
+    void display() {
+        Car::display();
+        cout << "LoadCapacity: " << loadCapacity << endl;
+    }
+};
+
+int main() {
+    Car car("Toyota", 4, 69);
+    car.display();
+    
+    car.ChangePower(175);
+    car.display();
+
+    Lorry lorry("Mercedes", 6, 230, 12);
+    lorry.display();
+
+    lorry.ChangeBrand("Honda");
+    lorry.ChangePower(420);
+    lorry.ChangeLoadCapacity(15);
+    lorry.display();
+
+    return 0;
+}
