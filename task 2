@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Button {
+private:
+    int width;
+    int height;
+
+public:
+    Button() : width(0), height(0) {}
+
+    Button(int w, int h) : width(w), height(h) {}
+
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
+    void setWidth(int w) { width = w; }
+    void setHeight(int h) { height = h; }
+
+    void print() const {
+        cout << "Button Size: " << width << "x" << height << endl;
+    }
+};
+
+class Window {
+protected:
+    Button button;
+    int x;
+    int y;
+
+public:
+    Window() : button(), x(0), y(0) {}
+
+    Window(int bx, int by, int w, int h) : button(w, h), x(bx), y(by) {}
+
+    virtual ~Window() {
+    }
+
+    virtual void print() const {
+        cout << "Window Position: (" << x << ", " << y << ")\n";
+        button.print();
+    }
+};
+
+class MenuWindow : public Window {
+private:
+    string menuName;
+
+public:
+    MenuWindow() : Window(), menuName("None") {}
+
+    MenuWindow(int bx, int by, int w, int h, const string& name)
+        : Window(bx, by, w, h), menuName(name) {}
+
+    ~MenuWindow() override {}
+
+    void print() const override {
+        Window::print();
+        cout << "Menu Button: " << menuName << endl;
+    }
+};
+
+int main() {
+    MenuWindow mw(100, 200, 50, 20, "File");
+    mw.print();
+
+    return 0;
+}
